@@ -1,0 +1,97 @@
+
+
+<%- include('../partials/manager_sidebar.ejs')%>
+
+<div class="main-container">
+		<a href="/eventinfo/create">Create Event</a>
+	
+	<h2 align=center>Event Information</h2>
+	<br>
+	<div>
+		<select class="form-control mr-sm-2" id="searchBy">
+			<option selected hidden>Search By</option>
+			<option value="eventname">Event Name</option>
+			<option value="eventdate">Event Date</option>
+		</select>
+        <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search eventinfo" aria-label="Search eventinfo">
+	</div>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+		$('#search').on('keyup',function(){
+			var search = $("#search").val();
+			var searchBy = $("#searchBy").val();
+
+			$.ajax({
+				url: '/eventinfo/search',
+				method: 'post',
+				datatype : 'json',
+				data : {'search':search,
+						'searchBy':searchBy},
+				success:function(response){
+					if(response.eventinfo !== 'error'){
+						var tableBody="<tr><td>#</td><td>Name</td><td>Contact Number</td><td>Address</td><td>Email</td><td>Status</td><td>Gender</td><td>Action</td></tr>";
+						response.eventinfo.forEach(element => {
+							var tableRow="";
+							tableRow+="<td>"+element.eventid+"</td>";
+							tableRow+="<td>"+element.eventname+"</td>";
+							tableRow+="<td>"+element.eventdate+"</td>";
+							tableRow+="<td>"+element.expiredate+"</td>";
+							tableRow+="<td>"+element.eventdescription+"</td>";
+							tableRow+="<td>"+element.eventstatus+"</td>";
+							tableRow+="<td>"+element.audience+"</td>";
+							tableRow+="<td><a href='../eventinfo/edit/"+element.eventid+"'>Edit</a> | <a href='../eventinfo/delete/"+element.eventid+"'>Delete</a></td>";
+							tableBody=tableBody+"<tr>"+tableRow+"</tr>";
+						});
+						$('#table').html(tableBody);
+					}else{
+
+					}
+				},
+				error:function(response){
+					alert('server error');
+				}
+			});
+		});
+	});
+	</script>
+	<hr>
+	<div><a class="btn btn-success" href="/manager_home/eventinfo/csv" role="button">To CSV</a>
+	</div>
+	<hr>
+	<div><a class="btn btn-success" href="/manager_home/pdf" role="button" id="pdf">To PDF</a>
+	</div>
+	<hr>
+	<div class="card-box mb-30">
+		<div class="pb-20">
+		<table class="table hover data-table  nowrap" id="table" name="table">
+			<tr>
+				<th class="table-plus datatable-nosort">#</td>
+				<th>Event Name</td>
+				<th>Event Date </td>
+				<th>Expire Date</td>
+				<th>Event Description</td>
+				<th>Event Status</td>
+				<th>Aduience</td>
+				<th>Action</td>
+			</tr>
+	
+			<% for(var i=0; i< eventList.length; i++ ){ %>
+			<tr>
+				<td class="table-plus"><%= eventList[i].eventid %></td>
+				<td><%= eventList[i].eventname %></td>
+				<td><%= eventList[i].eventdate %></td>
+				<td><%= eventList[i].expiredate %></td>
+				<td><%= eventList[i].eventdescription %></td>
+				<td><%= eventList[i].eventstatus %></td>
+				<td><%= eventList[i].audience %></td>
+				<td>
+					<a href="../eventinfo/edit/<%=eventList[i].eventid%>">Edit</a>	|
+					<a href="../eventinfo/delete/<%=eventList[i].eventid%>">delete</a>
+				</td>
+			</tr>
+			<% } %>
+		</table>
+		</div>	
+	</div>			
+</div>

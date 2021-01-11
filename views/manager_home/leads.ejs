@@ -1,0 +1,36 @@
+
+
+<%- include('../partials/manager_sidebar.ejs')%>
+
+<div class="main-container">
+	
+	<h2 align=center>Leads Information</h2>
+	<br>
+
+	<div class="card-box mb-30">
+		<div class="pb-20">
+		<table class="table hover data-table  nowrap" id="table" name="table">
+			<tr>
+				<th class="table-plus datatable-nosort">#</td>
+				<th>Name</td>
+				<th>Email</td>
+				<th>Phone</td>
+				<th>Status</td>
+				<th>Gender</td>
+			</tr>
+	
+			<% for(var i=0; i< leadsList.length; i++ ){ %>
+			<tr>
+				<td class="table-plus"><%= leadsList[i].id %></td>
+				<td><%= leadsList[i].name %></td>
+				<td><%= leadsList[i].email %></td>
+				<td><%= leadsList[i].phone %></td>
+				<td><%= leadsList[i].status %></td>
+				<td><%= leadsList[i].gender %></td>
+				
+			</tr>
+			<% } %>
+		</table>
+		</div>	
+	</div>			
+</div>

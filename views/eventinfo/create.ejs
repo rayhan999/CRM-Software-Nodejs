@@ -1,0 +1,45 @@
+<div class="pd-20 card-box mb-30">
+	<% if(typeof alerts !='undefined'){alerts.forEach(function(error) {%>
+			<div class="alert alert-warning alert-dismissible fade show mt-10" role="alert">
+			  <strong><%=error.msg%></strong>
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+	<%})}%>
+	<form method="post">
+		<fieldset>
+			<legend>Create Event</legend>
+			<table>
+				<tr>
+					<td>Event Name</td>
+					<td><input type="text" name="eventname"></td>
+				</tr>
+				<tr>
+					<td>Event Date</td>
+					<td><input type="date" name="eventdate"></td>
+				</tr>
+				<tr>
+					<td>Expire Date</td>
+					<td><input type="date" name="expiredate"></td>
+				</tr>
+				<tr>
+					<td>Event Description</td>
+					<td><input type="text" name="eventdescription"></td>
+				</tr>
+				<tr>
+					<td>Event Status</td>
+					<td><input type="text" name="eventstatus"></td>
+				</tr>
+				<tr>
+					<td>Audience</td>
+					<td><input type="text" name="audience"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" name="submit" value="Create"></td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+</div>

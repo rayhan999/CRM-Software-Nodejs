@@ -1,0 +1,36 @@
+
+	<form method="post">
+		<fieldset>
+			<legend>Delete Event</legend>
+			<table>
+				<tr>
+					<td>Event Name  :</td>
+					<td><%=eventname%></td>
+				</tr>
+				<tr>
+					<td>Event Date :</td>
+					<td><%=eventdate%></td>
+				</tr>
+				<tr>
+					<td>Expire Date :</td>
+					<td><%=expiredate%></td>
+				</tr>
+				<tr>
+					<td>Description :</td>
+					<td><%=eventdescription%></td>
+				</tr>
+				<tr>
+					<td>Event Status :</td>
+					<td><%=eventstatus%></td>
+				</tr>
+				<tr>
+					<td>Audience :</td>
+					<td><%=audience%></td>
+				</tr>
+			</table>
+			<div>
+				<h3>Are you sure?</h3>
+				<input class="btn btn-denger" type="submit" name="submit" value="Confirm">
+			</div>
+		</fieldset>
+	</form>

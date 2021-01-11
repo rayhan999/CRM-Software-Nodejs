@@ -1,0 +1,96 @@
+
+
+<%- include('../partials/manager_sidebar.ejs') %>
+
+<div class="main-container">
+	<a href="/employee/create">Create New Employee</a>
+    <hr>
+	<h2 align=center>Employee Information</h2>
+	<br>
+	<div>
+		<select class="form-control mr-sm-2" id="searchBy">
+			<option selected hidden>Search By</option>
+			<option value="username">Employee Name</option>
+		</select>
+        <input class="form-control mr-sm-2" type="text" name="search" id="search" placeholder="Search Employee" aria-label="Search Employee">
+	</div>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+		$('#search').on('keyup',function(){
+			var search = $("#search").val();
+			var searchBy = $("#searchBy").val();
+
+			$.ajax({
+				url: '/employee/search',
+				method: 'post',
+				datatype : 'json',
+				data : {'search':search,
+						'searchBy':searchBy},
+				success:function(response){
+					if(response.employee !== 'error'){
+						var tableBody="<tr><td>#</td><td>Name</td><td>Contact Number</td><td>Address</td><td>Email</td><td>Status</td><td>Gender</td><td>Action</td></tr>";
+						response.employee.forEach(element => {
+							var tableRow="";
+							tableRow+="<td>"+element.id+"</td>";
+							tableRow+="<td>"+element.username+"</td>";
+							tableRow+="<td>"+element.password+"</td>";
+							tableRow+="<td>"+element.type+"</td>";
+							tableRow+="<td>"+element.designation+"</td>";
+							tableRow+="<td>"+element.contactNumber+"</td>";
+                            tableRow+="<td>"+element.email+"</td>";
+                            tableRow+="<td>"+element.salary+"</td>";
+							tableRow+="<td><a href='../employee/edit/"+element.id+"'>Edit</a> | <a href='../employee/delete/"+element.id+"'>Delete</a></td>";
+							tableBody=tableBody+"<tr>"+tableRow+"</tr>";
+						});
+						$('#table').html(tableBody);
+					}else{
+
+					}
+				},
+				error:function(response){
+					alert('server error');
+				}
+			});
+		});
+	});
+    </script>
+    <br>
+	<div class="card-box mb-30">
+		<div class="pb-20">
+		<table class="table hover data-table  nowrap" id="table" name="table">
+			<tr>
+				<th class="table-plus datatable-nosort">#</td>
+				<th>Employee Name</td>
+				<th>Password</td>
+                <th>Type</td>
+                <th>Designation</td>
+                <th>Contact Number</td>
+                <th>Email</td>
+				<th>Salary</td>
+				<th>Action</td>
+			</tr>
+    
+
+
+            <% for(var i=0; i< userList.length; i++ ){ %>
+                <tr>
+                    <td><%= userList[i].id %></td>
+                    <td><%= userList[i].username %></td>
+                    <td><%= userList[i].password %></td>
+                    <td><%= userList[i].type %></td>
+                    <td><%= userList[i].designation %></td>
+                    <td><%= userList[i].contactNumber %></td>
+                    <td><%= userList[i].email %></td>
+                    <td><%= userList[i].salary  %></td>
+                   
+                    <td>
+                        <a href="/employee/edit/<%=userList[i].id%>">Edit</a><br>
+                        <a href="/employee/delete/<%=userList[i].id%>">Delete</a>
+                    </td>
+                </tr>
+			<% } %>
+		</table>
+		</div>	
+	</div>			
+</div>
